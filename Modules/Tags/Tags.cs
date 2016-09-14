@@ -26,7 +26,7 @@ namespace BotRoss
         {
             await msg.Channel.SendMessageAsync(Tag.RemoveTag(tag));
         }
-        [Command("alltag"), Summary("Gets all tag."), Alias("alltags")]
+        [Command("alltag"), Summary("Gets all tag."), Alias("alltags","tags")]
         public async Task GetAllTag(IUserMessage msg)
         {
             await msg.Channel.SendMessageAsync(Tag.FindTag(""));

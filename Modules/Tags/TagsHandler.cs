@@ -29,12 +29,8 @@ namespace BotRoss
         {
             var commands = GetTags();
             var result = commands.Where(x => x.Key.Contains(req));
-            var output = "";
-            foreach (var item in result)
-            {
-                output += $"Tag: <{item.Key}>   `{item.Value}`{Environment.NewLine}";
-            }
-            return result != null ? output : $"No results found ({req})";
+
+            return result != null ? string.Join(", ", result.OrderBy(x => x.Key).Select(x => x.Key)) : $"No results found ({req})";
         }
         public static string ExecuteTag(string tag)
         {

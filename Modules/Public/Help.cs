@@ -18,23 +18,28 @@ public class Help
     {
         _commands = command;
     }
-    [Command("help"), Summary("Helps you with a command.")]
-    public async Task GetHelp(IUserMessage msg,
-    [Summary("Command")] string command)
+    [Command("helpcommand"), Summary("Helps you with a command."), Alias("help")]
+    public async Task GetHelp(IUserMessage msg, [Summary("Command")] string command)
     {
         var result = _commands.Commands.FirstOrDefault(x => x.Text.ToLower() == command.ToLower());
-        if(result == null)
+        if (result == null)
             result = _commands.Commands.FirstOrDefault(x => x.Aliases.Any(y => y == command.ToLower()));
-        var output = "";
-        output += $"[{result.Module}] <{result.Name}> {string.Join(", ", result.Parameters)}{Environment.NewLine}{result.Summary}";
-        await msg.Channel.SendMessageAsync(result != null ? output : "No commands found!");
+
+        await msg.Channel.SendMessageAsync(result != null ? $"[{result.Module}] <{result.Name}> {string.Join(", ", result.Parameters)}{Environment.NewLine}{result.Summary}" : "No commands found!");
     }
 
-    [Command("command"), Summary("Finds all commands with a given keyword or return all commands."), Alias("findcommands", "commands")]
-    public async Task GetCommand(IUserMessage msg,
-    [Summary("Command")] string command = "")
+    [Command("findcommand"), Summary("Finds all commands with a given keyword or return all commands."), Alias("findcommands", "command", "commands")]
+    public async Task GetCommand(IUserMessage msg, [Summary("Command")] string command = "")
     {
-        var result = command == "" ? string.Join(Environment.NewLine, _commands.Commands.Select(x => x.Text)) : string.Join(Environment.NewLine, _commands.Commands.Where(x => x.Text.ToLower().Contains(command.ToLower())).Select(x => x.Text));
-        await msg.Channel.SendMessageAsync(result != null ? $"{string.Join(", ", result)}" : "No commands found!");
+        string result = "";
+        if (command == "")
+            foreach (var module in _commands.Modules)
+                result += $"[**{module.Name}**]{Environment.NewLine}    {string.Join(", ", module.Commands.OrderBy(x => x.Text).Select(x => x.Text))}{Environment.NewLine}";
+        else
+            result = string.Join(", ", _commands.Commands.Where(x => x.Text.ToLower().Contains(command.ToLower())).Select(x => x.Text));
+        await msg.Channel.SendMessageAsync(result != "" ? result : "No commands found!");
+
+        //var result = command == "" ? string.Join(", ", _commands.Commands.Select(x => x.Text)) : string.Join(", ", _commands.Commands.Where(x => x.Text.ToLower().Contains(command.ToLower())).Select(x => x.Text));
+        //await msg.Channel.SendMessageAsync(result != null ? $"{string.Join(", ", result)}" : "No commands found!");
     }
 }
