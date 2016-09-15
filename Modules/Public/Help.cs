@@ -33,7 +33,7 @@ public class Help
     {
         string result = "";
         if (command == "")
-            foreach (var module in _commands.Modules)
+            foreach (var module in _commands.Modules.OrderBy(x => x.Name))
                 result += $"[**{module.Name}**]{Environment.NewLine}    {string.Join(", ", module.Commands.OrderBy(x => x.Text).Select(x => x.Text))}{Environment.NewLine}";
         else
             result = string.Join(", ", _commands.Commands.Where(x => x.Text.ToLower().Contains(command.ToLower())).Select(x => x.Text));
