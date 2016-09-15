@@ -25,7 +25,7 @@ public class Help
         if (result == null)
             result = _commands.Commands.FirstOrDefault(x => x.Aliases.Any(y => y == command.ToLower()));
 
-        await msg.Channel.SendMessageAsync(result != null ? $"[{result.Module}] <{result.Name}> {string.Join(", ", result.Parameters)}{Environment.NewLine}{result.Summary}" : "No commands found!");
+        await msg.Channel.SendMessageAsync(result != null ? $"[**{result.Module}**] <*{result.Name}*> {string.Join(", ", result.Parameters)}{Environment.NewLine}{result.Summary}{Environment.NewLine}Aliases: {string.Join(", ", result.Aliases)}" : "No commands found!");
     }
 
     [Command("findcommand"), Summary("Finds all commands with a given keyword or return all commands."), Alias("findcommands", "command", "commands")]
