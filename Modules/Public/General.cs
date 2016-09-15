@@ -18,16 +18,14 @@ public class General
     }
 
     [Command("say"), Summary("Echos a message."), Alias("echo")]
-    public async Task Say(IUserMessage msg,
-        [Summary("The text to echo")] string echo)
+    public async Task Say(IUserMessage msg, [Summary("The text to echo")] string echo)
     {
-        await msg.Channel.SendMessageAsync(echo);
+        await msg.Channel.SendMessageAsync(echo = echo.StartsWith("!") ? echo.TrimStart('!') : echo);
     }
 
     [Command("userinfo"), Summary("Returns info about the current user, or the user parameter, if one passed.")]
     [Alias("user", "whois")]
-    public async Task UserInfo(IUserMessage msg,
-        [Summary("The (optional) user to get info for")] IUser user = null)
+    public async Task UserInfo(IUserMessage msg, [Summary("The (optional) user to get info for")] IUser user = null)
     {
         var userInfo = user ?? await _client.GetCurrentUserAsync();
         await msg.Channel.SendMessageAsync($"{userInfo.Username}#{userInfo.Discriminator}{Environment.NewLine}ID: {userInfo.Id}{Environment.NewLine}Playing: {userInfo.Game}{Environment.NewLine}{userInfo.AvatarUrl}");

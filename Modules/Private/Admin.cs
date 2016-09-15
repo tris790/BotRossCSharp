@@ -15,7 +15,7 @@ public class Admin
     }
 
     [Command("shutdown"), Summary("Turns off the bot."), Alias("turnoff", "close", "exit"), RequirePermission(GuildPermission.Administrator)]
-    public async Task Shutdown(IUserMessage msg)
+    public void Shutdown(IUserMessage msg)
     {
         Environment.Exit(0);
     }
