@@ -19,7 +19,7 @@ public class Help
         _commands = command;
     }
     [Command("helpcommand"), Summary("Helps you with a command."), Alias("help")]
-    public async Task GetHelp(IUserMessage msg, [Summary("Command")] string command)
+    public async Task GetHelp(IUserMessage msg, [Summary("The command you want help for.")] string command)
     {
         var result = _commands.Commands.FirstOrDefault(x => x.Text.ToLower() == command.ToLower());
         if (result == null)

@@ -18,14 +18,14 @@ public class General
     }
 
     [Command("say"), Summary("Echos a message."), Alias("echo")]
-    public async Task Say(IUserMessage msg, [Summary("The text to echo")] string echo)
+    public async Task Say(IUserMessage msg, [Summary("The text to echo.")] string echo)
     {
         await msg.Channel.SendMessageAsync(echo = echo.StartsWith("!") ? echo.TrimStart('!') : echo);
     }
 
     [Command("userinfo"), Summary("Returns info about the current user, or the user parameter, if one passed.")]
     [Alias("user", "whois")]
-    public async Task UserInfo(IUserMessage msg, [Summary("The (optional) user to get info for")] IUser user = null)
+    public async Task UserInfo(IUserMessage msg, [Summary("The (optional) user to get info for.")] IUser user = null)
     {
         var userInfo = user ?? await _client.GetCurrentUserAsync();
         await msg.Channel.SendMessageAsync($"{userInfo.Username}#{userInfo.Discriminator}{Environment.NewLine}ID: {userInfo.Id}{Environment.NewLine}Playing: {userInfo.Game}{Environment.NewLine}{userInfo.AvatarUrl}");
@@ -57,7 +57,6 @@ public class General
         await msg.Channel.SendMessageAsync($"A user with `MANAGE SERVER` can invite me to your server here:{Environment.NewLine}<https://discordapp.com/oauth2/authorize?permissions=536345663&scope=bot&client_id=168214818459877376>");
     }
 
-    // TODO: Limit this command to Server Moderators (waiting on permissions)
     [Command("leave"), Summary("Instructs the bot to leave this server"), RequirePermission(GuildPermission.Administrator)]
     public async Task Leave(IUserMessage msg)
     {

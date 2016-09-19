@@ -7,10 +7,10 @@
   "dependencies": {
     "Discord.Addons.MpGame": "0.5.6",
     "Discord.Addons.SimpleConfig": "0.2.4",
-    "Discord.Addons.SimplePermissions": "0.4.3",
+    "Discord.Addons.SimplePermissions": "0.4.4",
     "Discord.Addons.UsefulServices": "1.2.0-dev",
-    "Discord.Net": "1.0.0-beta-00416",
-    "Discord.Net.Commands": "1.0.0-beta-00416",
+    "Discord.Net": "1.0.0-beta-00417",
+    "Discord.Net.Commands": "1.0.0-beta-00417",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.0"
